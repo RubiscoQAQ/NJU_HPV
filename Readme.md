@@ -26,19 +26,19 @@ Type = 901
 
 **提前在ndyy上进行登陆**，即下图
 
-![](Readme.assets/QQ%E6%88%AA%E5%9B%BE20220516172625.png)
+![](http://124.222.243.39:8099/root/My_Pics/raw/master/pictures/2022/05/22_20_13_24_202205222013278.png)
 
 在登陆后，尝试直接运行脚本。一些正常的提示信息如下
 
-![](Readme.assets/QQ%E6%88%AA%E5%9B%BE20220516172758.png)
+![](http://124.222.243.39:8099/root/My_Pics/raw/master/pictures/2022/05/22_20_13_31_202205222013216.png)
 
 ![QQ截图20220516172819](Readme.assets/QQ%E6%88%AA%E5%9B%BE20220516172819.png)
 
-![QQ截图20220516172845](Readme.assets/QQ%E6%88%AA%E5%9B%BE20220516172845.png)
+![QQ截图20220516172845](http://124.222.243.39:8099/root/My_Pics/raw/master/pictures/2022/05/22_20_13_34_202205222013216.png)
 
 分别代表已经预约、成功预约和已经没有名额。
 
-![](Readme.assets/QQ%E6%88%AA%E5%9B%BE20220516173127.png)
+![](http://124.222.243.39:8099/root/My_Pics/raw/master/pictures/2022/05/22_20_13_39_202205222013640.png)
 
 如果出现上图报错，请参照下面的教程
 
@@ -46,21 +46,21 @@ Type = 901
 
 使用浏览器，在ndyy界面，按F12按键，进入控制台。
 
-![](Readme.assets/QQ%E6%88%AA%E5%9B%BE20220516173324.png)
+![](http://124.222.243.39:8099/root/My_Pics/raw/master/pictures/2022/05/22_20_13_42_202205222013749.png)
 
 选择应用
 
-![](Readme.assets/QQ%E6%88%AA%E5%9B%BE20220516173405.png)
+![](http://124.222.243.39:8099/root/My_Pics/raw/master/pictures/2022/05/22_20_13_46_202205222013575.png)
 
 选择cookies
 
-![](Readme.assets/QQ%E6%88%AA%E5%9B%BE20220516173425.png)
+![](http://124.222.243.39:8099/root/My_Pics/raw/master/pictures/2022/05/22_20_13_49_202205222013689.png)
 
 将如图数值替换掉脚本中的数值
 
-![](Readme.assets/QQ%E6%88%AA%E5%9B%BE20220516173446.png)
+![](http://124.222.243.39:8099/root/My_Pics/raw/master/pictures/2022/05/22_20_13_53_202205222013243.png)
 
-![](Readme.assets/QQ%E6%88%AA%E5%9B%BE20220516173616.png)
+![](http://124.222.243.39:8099/root/My_Pics/raw/master/pictures/2022/05/22_20_13_56_202205222013495.png)
 
 > version 2.0
 
