@@ -33,7 +33,9 @@ def getTaskList(taskId):
     lst = []
     for task in res['data']:
         dic = []
-        if '九价' in str(task['预约任务名称']) or task != 302:
+        d = datetime.datetime.strptime(task['预约任务开放时间'], '%Y/%m/%d %H:%M:%S').date()
+        today = datetime.datetime.today().date()
+        if ('九价' in str(task['预约任务名称']) and today == d) or taskId != 302:
             dic.append(task['预约任务开放时间'])
             dic.append(task['预约任务ID'])
             lst.append(dic)
@@ -107,6 +109,9 @@ def get_beijin_time():
 def startOnTime():
     taskList = []
     tasks = getTaskList(Type)
+    while len(tasks)==0:
+        print('请等待任务放出')
+        tasks = getTaskList(Type)
     if tasks[0] == '请更新cookies':
         return
     res = ' '

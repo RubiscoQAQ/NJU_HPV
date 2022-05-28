@@ -33,16 +33,21 @@ def getTaskList(taskId):
     lst = []
     for task in res['data']:
         dic = []
-        if '九价' in str(task['预约任务名称']) or task!=302:
+        d = datetime.datetime.strptime(task['预约任务开放时间'], '%Y/%m/%d %H:%M:%S').date()
+        today = datetime.datetime.today().date()
+        if ('九价' in str(task['预约任务名称']) and today == d) or taskId != 302:
             dic.append(task['预约任务开放时间'])
             dic.append(task['预约任务ID'])
             lst.append(dic)
     return lst
 
 @retry()
-def selectDate(taskList):
+def selectDate(task):
     api = selectDateApi
     dateLst = []
+    taskList = []
+    for i in task:
+        taskList.append(i['taskNum'])
     for task in taskList:
         param = task+'^鼓楼'
         datas = {"params":param}
@@ -58,9 +63,12 @@ def selectDate(taskList):
     return dateLst
 
 @retry()
-def selectTime(taskList,dateList):
+def selectTime(task,dateList):
     api = selectTimeApi
     paramList = []
+    taskList = []
+    for i in task:
+        taskList.append(i['taskNum'])
     for i in range(0,len(taskList)):
         param = taskList[i]+"^鼓楼^"+dateList[i]
         datas = {"params": param}
@@ -78,12 +86,16 @@ def selectTime(taskList,dateList):
 @retry()
 def tryInsert(paramList):
     api = selectApi
+    resList = []
     for param in paramList:
         datas = {"params": param}
         res = requests.post(api,data=datas).text
-        if res == '1':
-            return "成功"
-        return res
+        print('任务:'+str(param))
+        print(str(res))
+        if res != '1' and res != '您已预约该任务。':
+            resList.append(param.split('^')[0])
+
+    return resList
 
 @retry()
 def get_beijin_time():
@@ -102,27 +114,46 @@ def get_beijin_time():
 def startOnTime():
     taskList = []
     tasks = getTaskList(Type)
+    while len(tasks)==0:
+        print(datetime.datetime.now())
+        print('请等待任务放出')
+        tasks = getTaskList(Type)
     if tasks[0] == '请更新cookies':
         return
     res = ' '
     while True:
         nowTime = get_beijin_time()
         print(nowTime)
+        taskId = 1
         for task in tasks:
             d = datetime.datetime.strptime(task[0], '%Y/%m/%d %H:%M:%S')
             target = datetime.datetime.timestamp(d)
             now = datetime.datetime.timestamp(nowTime)
-            if int(now)-int(target)>-10:
-                print('开始预约')
+            if int(now)-int(target)>-5:
+                print('开始预约任务'+str(taskId)+':代码-'+str(task[1]))
+                taskId += 1
                 tasks.remove(task)
-                taskList.append(task[1])
+                dic = {'taskNum': task[1], 'maxTime': 10}
+                taskList.append(dic)
             else:
-                print('等待开始')
+                print('任务'+str(taskId)+'等待开始')
+                taskId += 1
         if len(taskList)>0:
-            res = tryInsert(selectTime(taskList,selectDate(taskList)))
-        print(res)
-        if res =='成功' or res == '您已预约该任务。' or res is None:
-            break
+            paramList = selectTime(taskList,selectDate(taskList))
+            res = tryInsert(paramList)
+            if res == []:
+                print('任务完成')
+                break
+            for i in res:
+                for j in taskList:
+                    if j['taskNum']==i:
+                        j['maxTime']-=1
+                        if j['maxTime']==0:
+                            taskList.remove(j)
+            if taskList == []:
+                print('所有任务都已经尝试')
+                break
+
 
 def tryLogin():
     times = 0
